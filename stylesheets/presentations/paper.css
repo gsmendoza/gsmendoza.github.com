@@ -1,0 +1,15 @@
+pre {
+  color: black !important;
+  font-size: 16pt !important;
+  border: none;
+}
+pre * {
+  color: black !important;
+  font-size: 16pt !important;
+}
+
+.reveal section {
+  page-break-after: auto !important;
+  border-bottom: thin dashed gray;
+  margin-bottom: 1em;
+}

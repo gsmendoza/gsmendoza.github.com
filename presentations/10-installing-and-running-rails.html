@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <title>
+      Geekcamp Baguio 2013 -
+      
+    </title>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'>
+    <link href='/vendor/reveal.js-2.4.0/css/reveal.min.css' rel='stylesheet'>
+    <link href='/vendor/reveal.js-2.4.0/css/theme/default.css' id='theme' rel='stylesheet'>
+    <link href='/stylesheets/presentations.css' id='theme' rel='stylesheet'>
+    <!-- For syntax highlighting -->
+    <link href='/vendor/reveal.js-2.4.0/lib/css/zenburn.css' rel='stylesheet'>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="/vendor/reveal.js-2.4.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      
+      document.write( '<link rel="stylesheet" href="/stylesheets/presentations/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="/vendor/reveal.js-2.4.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <h1>Installing and Running Rails</h1>
+        </section>
+        <section class='section-logo'>
+          <div class='image-group'>
+            <p><img src="/images/rails.png" alt="Rails logo">
+            <img src="/images/rails-overview.gif" alt="Rails overview"></p>
+          </div>
+          <ul>
+          <li>Created in 2003 by David Heinemeier Hansson.</li>
+          <li>Some popular examples of websites using Rails are
+          <a href="http://www.basecamphq.com/?source=rails">BaseCamp</a>,
+          <a href="http://www.twitter.com/">Twitter</a> and
+          <a href="github.com">GitHub</a>.</li>
+          <li>Convention over configuration = less code</li>
+          <li>Written in the Ruby programming language<br></li>
+          </ul>
+        </section>
+        <section class='section-logo'>
+          <div class='image-group'>
+            <p><img src="/images/ruby-logo.gif" alt="Ruby"></p>
+          </div>
+          <ul>
+          <li><p>A dynamic, open source programming language with a focus on simplicity and
+          productivity. It has an elegant syntax that is natural to read and easy to
+          write.</p></li>
+          <li><p>Created by Yukihiro Matsumoto.</p></li>
+          </ul>
+        </section>
+        <section>
+          <h2>&quot;Error driven development&quot;</h2>
+          
+          <p>Borrowed from Test-Driven Development:</p>
+          
+          <ol>
+          <li>Watch it fail.</li>
+          <li>Fix it with minimum solution.</li>
+          <li>Clean it up.</li>
+          </ol>
+        </section>
+        <section>
+          <h2>Exercise 1: Installing and running Rails</h2>
+        </section>
+        <section>
+          <h2>Goal</h2>
+          
+          <ul>
+          <li><strong>browser</strong>: http://localhost:3000</li>
+          <li><strong>error</strong>: Internet Explorer cannot display the webpage</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Step 1: Rails installer</h2>
+          
+          <p>On Windows, download Rails installer (Ruby 1.9) from <a href="http://%0Arailsinstaller.org">http://
+          railsinstaller.org</a> and install. You will be asked to enter your name
+          and email.</p>
+        </section>
+        <section>
+          <h2>Step 2: Create Rails application</h2>
+          
+          <pre><code>cmd &gt; rails new trips-app&#x000A;cmd &gt; cd trips-app&#x000A;cmd &gt; rails server&#x000A;</code></pre>
+          <aside class='notes'>
+            <ul>
+            <li><code>bundle install</code> may take awhile to finish.</li>
+            <li>You may have to
+            
+            <ul>
+            <li>make Windows firewall allow Ruby to access private network.</li>
+            <li>turn intranet settings in IE9.</li>
+            </ul></li>
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h2>Result</h2>
+          
+          <p><img src="/images/riding_rails_environment_4_0.png" alt="Welcome aboard: You’re riding Ruby on Rails!&quot;"></p>
+        </section>
+        <section>
+          <h2>What&#39;s happening?</h2>
+          
+          <p><img src="/images/webserver-basic-sm.gif" alt="Webserver"></p>
+          
+          <pre><code>Started GET &quot;/&quot; for 127.0.0.1 at 2013-08-07 18:03:44 +0800&#x000A;Processing by Rails::WelcomeController#index as HTML&#x000A;  Rendered C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/railties-4.0.0.rc2/lib/rails/templates/rails/welcome/index.html.erb (0.0ms)&#x000A;Completed 200 OK in 13ms (Views: 0.0ms | ActiveRecord: 0.0ms)&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 2: Closing Rails</h2>
+          
+          <h3>Action</h3>
+          
+          <pre><code>cmd &gt; Press Ctrl-C then `Y` to terminate batch job.&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <p>If you refresh the browser, http://localhost:3000 should now display &quot;Internet Explorer cannot display the webpage&quot;</p>
+        </section>
+        <section>
+          <h2>References and Images</h2>
+          
+          <ul>
+          <li>http://computer.howstuffworks.com/web-server1.htm</li>
+          <li>http://rubyonrails.org</li>
+          <li>http://ruby.railstutorial.org</li>
+          <li>http://www.ruby-lang.org/en</li>
+          </ul>
+        </section>
+        <section>
+          <p><a href="/presentations">Back to index</a></p>
+        </section>
+      </div>
+    </div>
+    <script src='/vendor/reveal.js-2.4.0/lib/js/head.min.js'></script>
+    <script src='/vendor/reveal.js-2.4.0/js/reveal.min.js'></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        width: 1366,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+      
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+      
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '/vendor/reveal.js-2.4.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>

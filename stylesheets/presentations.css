@@ -1,0 +1,30 @@
+.reveal pre {
+  margin-bottom: 2em;
+}
+.reveal pre code {
+  padding: 0.75em;
+}
+.reveal strong {
+  color: yellow;
+}
+
+div.image-group {
+  background: white;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+section.section-logo img {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+section.section-logo-large img {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  height: 10em;
+}

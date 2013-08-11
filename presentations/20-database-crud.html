@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <title>
+      Geekcamp Baguio 2013 -
+      
+    </title>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'>
+    <link href='/vendor/reveal.js-2.4.0/css/reveal.min.css' rel='stylesheet'>
+    <link href='/vendor/reveal.js-2.4.0/css/theme/default.css' id='theme' rel='stylesheet'>
+    <link href='/stylesheets/presentations.css' id='theme' rel='stylesheet'>
+    <!-- For syntax highlighting -->
+    <link href='/vendor/reveal.js-2.4.0/lib/css/zenburn.css' rel='stylesheet'>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="/vendor/reveal.js-2.4.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      
+      document.write( '<link rel="stylesheet" href="/stylesheets/presentations/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="/vendor/reveal.js-2.4.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <h1>Database CRUD</h1>
+        </section>
+        <section>
+          <h2>Exercise 1: List itineraries</h2>
+        </section>
+        <section>
+          <h2>Goal</h2>
+          
+          <pre><code>cmd &gt; rails console&#x000A;irb &gt; Itinerary.all&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>NameError: uninitialized constant Itinerary&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 0: Install and configure Geany</h2>
+          
+          <ul>
+          <li><p>Download from <a href="geany.org">geany.org</a> and install</p></li>
+          <li><p>Configure Geany:</p>
+          
+          <pre><code>Preferences&#x000A;  Editor&#x000A;    Indentation&#x000A;      Width: 2&#x000A;      Type: Spaces&#x000A;</code></pre></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Step 1: Create Itinerary class</h2>
+          
+          <pre><code># app/models/itinerary.rb&#x000A;class Itinerary&#x000A;end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class &#x000A;</code></pre>
+          
+          <ul>
+          <li>A class is a type of object.</li>
+          <li>Convention over configuration: case matters.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Step 2: Make Itinerary an ActiveRecord</h2>
+          
+          <pre><code>    # app/models/itinerary.rb&#x000A;    class Itinerary &lt; ActiveRecord::Base&#x000A;    end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class &#x000A;</code></pre>
+          
+          <ul>
+          <li>ActiveRecord is a ruby gem (library) used to managing database records</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Step 3: Reload the rails console</h2>
+          
+          <pre><code>irb &gt; reload!&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>Reloading...&#x000A;=&gt; true&#x000A;&#x000A;irb &gt; Itinerary.all&#x000A;[1m←[35mItinerary Load (0.0ms)←[0m  SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 4. Create a database table itineraries.</h2>
+          
+          <pre><code>cmd &gt; rails generate migration create_itineraries &#x000A;&#x000A;# /db/migrations/2013_****_create_itineraries.rb &#x000A;class CreateItineraries &lt; ActiveRecord::Migration&#x000A;  def change&#x000A;    create_table :itineraries do |t|&#x000A;      t.string &quot;location&quot;&#x000A;      t.date &quot;travel_on&quot;&#x000A;    end&#x000A;  end&#x000A;end&#x000A;&#x000A;cmd &gt; rake db:migrate&#x000A;</code></pre>
+          
+          <ul>
+          <li>Migration is a transaction to update our database</li>
+          <li>Database is like an enhanced spreadsheet</li>
+          <li>Two kinds of rails commands: rails <command> and rake <command></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Result</h2>
+          
+          <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; ←[1m←[36mItinerary Load (7.8ms)←[0m  ←[1mSELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;←[0m&#x000A;=&gt; #&lt;ActiveRecord::Relation []&gt;    &#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 2: Create an itinerary</h2>
+          
+          <pre><code>irb &gt; itinerary = Itinerary.new&#x000A;=&gt; #&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;&#x000A;&#x000A;irb &gt; itinerary.location = &#39;Baguio&#39;&#x000A;irb &gt; itinerary.travel_on = Date.new(2013, 12, 25) &#x000A;irb &gt; itinerary.save&#x000A;</code></pre>
+          
+          <ul>
+          <li>Variable assignment</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Exercise 3: Find a specific itinerary</h2>
+          
+          <pre><code>irb &gt; Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 4: Edit an itinerary</h2>
+          
+          <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Baguio&quot;&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location = &#39;Manila&#39;&#x000A;irb &gt; itinerary.save&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Manila&quot;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 5: Delete an itinerary</h2>
+          
+          <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;&#x000A;irb &gt; itinerary.destroy&#x000A;&#x000A;irb &gt; Itinerary.find(1)&#x000A;=&gt; ActiveRecord::RecordNotFound: Couldn&#39;t find Itinerary with id=1    &#x000A;</code></pre>
+        </section>
+        <section>
+          <p><a href="/presentations">Back to index</a></p>
+        </section>
+      </div>
+    </div>
+    <script src='/vendor/reveal.js-2.4.0/lib/js/head.min.js'></script>
+    <script src='/vendor/reveal.js-2.4.0/js/reveal.min.js'></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        width: 1366,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+      
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+      
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '/vendor/reveal.js-2.4.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>
