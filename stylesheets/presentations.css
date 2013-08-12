@@ -31,3 +31,7 @@ section.section-logo-large img {
   margin: 0;
   height: 10em;
 }
+
+div.smaller {
+  font-size: smaller;
+}

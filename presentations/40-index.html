@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <title>
+      Geekcamp Baguio 2013 -
+      
+    </title>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'>
+    <link href='/vendor/reveal.js-2.4.0/css/reveal.min.css' rel='stylesheet'>
+    <link href='/vendor/reveal.js-2.4.0/css/theme/default.css' id='theme' rel='stylesheet'>
+    <link href='/stylesheets/presentations.css' id='theme' rel='stylesheet'>
+    <!-- For syntax highlighting -->
+    <link href='/vendor/reveal.js-2.4.0/lib/css/zenburn.css' rel='stylesheet'>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="/vendor/reveal.js-2.4.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      
+      document.write( '<link rel="stylesheet" href="/stylesheets/presentations/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="/vendor/reveal.js-2.4.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <h1>List Itineraries Page</h1>
+        </section>
+        <section>
+          <h2>Step 0: Have at least one itinerary</h2>
+          
+          <ul>
+          <li>Create several itineraries in rails console.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Goal</h2>
+          
+          <pre><code>browser &gt; http://localhost:3000/itineraries&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>browser =&gt;&#x000A;  Unknown action&#x000A;  The action &#39;index&#39; could not be found for ItinerariesController&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 1: Add index action to ItinerariesController</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def index&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/index, application/index with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 2: Add itineraries/index template</h2>
+          
+          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;%= debug Itinerary.all %&gt;&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>browser =&gt;&#x000A;  ---&#x000A;  - !ruby/object:Itinerary&#x000A;    attributes:&#x000A;      id: 1&#x000A;      location: Baguio&#x000A;      travel_on: 2013-08-12&#x000A;  - !ruby/object:Itinerary&#x000A;    attributes:&#x000A;      id: 2&#x000A;      location: Manila&#x000A;      travel_on: 2013-08-13&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 3: Prettify List Itineraries page</h2>
+          
+          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;% itineraries = Itinerary.all %&gt;&#x000A;&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 4.1: Clean up: do not interact with database directly in views</h2>
+          <div class='smaller'>
+            <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
+          </div>
+          <h2>Result</h2>
+          
+          <pre><code>browser =&gt;&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/index.html.erb&#x000A;    where line #8 raised:&#x000A;  undefined method `each&#39; for nil:NilClass&#x000A;  Line 8: &lt;% @itineraries.each do |itinerary| %&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 4.2: Clean up: itineries/index to set up @itineraries</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def index&#x000A;    @itineraries = Itinerary.all&#x000A;  end&#x000A;end&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 5: Link itineraries to their Show pages</h2>
+          
+          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= link_to &#39;Show&#39;, itinerary %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 6: Link itinerary back to Itineraries Index page</h2>
+          
+          <pre><code># app/views/itineraries/show.html.erb&#x000A;&#x000A;&lt;p&gt;&lt;%= link_to &#39;Back&#39;, Itinerary %&gt;&lt;/p&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <p><a href="/presentations">Back to index</a></p>
+        </section>
+      </div>
+    </div>
+    <script src='/vendor/reveal.js-2.4.0/lib/js/head.min.js'></script>
+    <script src='/vendor/reveal.js-2.4.0/js/reveal.min.js'></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        width: 1366,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+      
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+      
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '/vendor/reveal.js-2.4.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>
