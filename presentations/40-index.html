@@ -89,12 +89,12 @@
         <section>
           <h2>Step 5: Link itineraries to their Show pages</h2>
           
-          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= link_to &#39;Show&#39;, itinerary %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
+          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= link_to &#39;Show&#39;, action: &#39;show&#39;, id: itinerary.id %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
         </section>
         <section>
           <h2>Step 6: Link itinerary back to Itineraries Index page</h2>
           
-          <pre><code># app/views/itineraries/show.html.erb&#x000A;&#x000A;&lt;p&gt;&lt;%= link_to &#39;Back&#39;, Itinerary %&gt;&lt;/p&gt;&#x000A;</code></pre>
+          <pre><code># app/views/itineraries/show.html.erb&#x000A;&#x000A;&lt;p&gt;&lt;%= link_to &#39;Back&#39;, action: &#39;index&#39; %&gt;&lt;/p&gt;&#x000A;</code></pre>
         </section>
         <section>
           <p><a href="/presentations">Back to index</a></p>

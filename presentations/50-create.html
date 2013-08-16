@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <title>
+      Geekcamp Baguio 2013 -
+      Create Itinerary Page
+    </title>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'>
+    <link href='/vendor/reveal.js-2.4.0/css/reveal.min.css' rel='stylesheet'>
+    <link href='/vendor/reveal.js-2.4.0/css/theme/default.css' id='theme' rel='stylesheet'>
+    <link href='/stylesheets/presentations.css' id='theme' rel='stylesheet'>
+    <!-- For syntax highlighting -->
+    <link href='/vendor/reveal.js-2.4.0/lib/css/zenburn.css' rel='stylesheet'>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="/vendor/reveal.js-2.4.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      
+      document.write( '<link rel="stylesheet" href="/stylesheets/presentations/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="/vendor/reveal.js-2.4.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <h1>Create Itinerary Page</h1>
+        </section>
+        <section>
+          <h2>Exercise 1: Create an Itinerary</h2>
+          
+          <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 1: Create a link to create a new itinerary</h2>
+          
+          <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;p&gt;&#x000A;  &lt;%= link_to &#39;New&#39;, action: &#39;new&#39; %&gt;&#x000A;&lt;/p&gt;&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;But instead I see&#x000A;  Unknown action&#x000A;  The action &#39;new&#39; could not be found for ItinerariesController&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 2: Add new action to ItinerariesController</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def new&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/new, application/new with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 3: Add itineraries/new template</h2>
+          
+          <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.new) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.text_field :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see&#x000A;  Unknown action: The action &#39;create&#39; could not be found for&#x000A;  ItinerariesController&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 4: Add Create action</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/create, application/create with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 5: Render the show page</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          <h2>Result</h2>
+          
+          <pre><code>browser =&gt;&#x000A;  NoMethodError in Itineraries#create&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/show.html.erb&#x000A;  where line #1 raised:&#x000A;  undefined method `id&#39; for nil:NilClass&#x000A;  Line 1: &lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 6: Create an itinerary, save it, then show it</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          <h2>Result</h2>
+          
+          <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see an itinerary with blank location and travel date&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 7: Set the itinerary from the params</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 2: Fix bug: refreshing the itinerary page creates a new itinerary</h2>
+          
+          <pre><code>Given I have just created an itinerary&#x000A;And I am now viewing the created itinerary&#x000A;When I refresh the page&#x000A;Then I should see the same itinerary&#x000A;But instead a new itinerary is created!&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 8: Redirect instead of render</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Exercise 3: Refactor params in create action</h2>
+        </section>
+        <section>
+          <h2>Step 9: Refactor params in create action</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary]&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          
+          <h3>Result</h3>
+          
+          <pre><code>ActiveModel::ForbiddenAttributesError&#x000A;Extracted source (around line #15):&#x000A;Line 15: @itinerary.attributes = params[:itinerary]&#x000A;</code></pre>
+        </section>
+        <section>
+          <h2>Step 10: Specify allowed itinerary params</h2>
+          
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+        </section>
+        <section>
+          <p><a href="/presentations">Back to index</a></p>
+        </section>
+      </div>
+    </div>
+    <script src='/vendor/reveal.js-2.4.0/lib/js/head.min.js'></script>
+    <script src='/vendor/reveal.js-2.4.0/js/reveal.min.js'></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        width: 1366,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+      
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+      
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '/vendor/reveal.js-2.4.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '/vendor/reveal.js-2.4.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '/vendor/reveal.js-2.4.0/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>
