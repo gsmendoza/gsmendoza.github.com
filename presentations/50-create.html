@@ -59,7 +59,7 @@
         <section>
           <h2>Step 3: Add itineraries/new template</h2>
           
-          <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.new) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.text_field :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
+          <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.new) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.date_select :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
           
           <h3>Result</h3>
           
@@ -103,7 +103,7 @@
         <section>
           <h2>Step 8: Redirect instead of render</h2>
           
-          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
         </section>
         <section>
           <h2>Exercise 3: Refactor params in create action</h2>
@@ -111,7 +111,7 @@
         <section>
           <h2>Step 9: Refactor params in create action</h2>
           
-          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary]&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
           
           <h3>Result</h3>
           
@@ -120,7 +120,7 @@
         <section>
           <h2>Step 10: Specify allowed itinerary params</h2>
           
-          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect @itinerary&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
         </section>
         <section>
           <p><a href="/presentations">Back to index</a></p>
