@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> ><! <![endif]-->
+<html class='no-js'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Geekcamp Baguio 2013 Ruby on Rails Workshop Guide</title>
+    <meta content='Geekcamp Baguio 2013 Ruby on Rails Workshop Guide' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/vendor/initializr/css/normalize.min.css' rel='stylesheet'>
+    <link href='/vendor/initializr/css/main.css' rel='stylesheet'>
+    <script src='/vendor/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'></script>
+    <link href='/stylesheets/guide.css' rel='stylesheet'>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class='header-container'>
+      <header class='wrapper clearfix'>
+        <h1 class='title'>
+          Geekcamp Baguio 2013 Ruby on Rails Workshop Guide
+        </h1>
+      </header>
+    </div>
+    <div class='main-container'>
+      <div class='main wrapper clearfix'>
+        <article>
+          <section>
+            <h1>Create Itinerary Page</h1>
+          </section>
+          <section>
+            <h2>Exercise 1: Create an Itinerary</h2>
+            
+            <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 1: Create a link to create a new itinerary</h2>
+            
+            <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;p&gt;&#x000A;  &lt;%= link_to &#39;New&#39;, action: &#39;new&#39; %&gt;&#x000A;&lt;/p&gt;&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;But instead I see&#x000A;  Unknown action&#x000A;  The action &#39;new&#39; could not be found for ItinerariesController&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 2: Add new action to ItinerariesController</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def new&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/new, application/new with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 3: Add itineraries/new template</h2>
+            
+            <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.new) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.date_select :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see&#x000A;  Unknown action: The action &#39;create&#39; could not be found for&#x000A;  ItinerariesController&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 4: Add Create action</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/create, application/create with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 5: Render the show page</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            <h2>Result</h2>
+            
+            <pre><code>browser =&gt;&#x000A;  NoMethodError in Itineraries#create&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/show.html.erb&#x000A;  where line #1 raised:&#x000A;  undefined method `id&#39; for nil:NilClass&#x000A;  Line 1: &lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 6: Create an itinerary, save it, then show it</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            <h2>Result</h2>
+            
+            <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see an itinerary with blank location and travel date&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 7: Set the itinerary from the params</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Exercise 2: Fix bug: refreshing the itinerary page creates a new itinerary</h2>
+            
+            <pre><code>Given I have just created an itinerary&#x000A;And I am now viewing the created itinerary&#x000A;When I refresh the page&#x000A;Then I should see the same itinerary&#x000A;But instead a new itinerary is created!&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 8: Redirect instead of render</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Exercise 3: Refactor params in create action</h2>
+          </section>
+          <section>
+            <h2>Step 9: Refactor params in create action</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>ActiveModel::ForbiddenAttributesError&#x000A;Extracted source (around line #15):&#x000A;Line 15: @itinerary.attributes = params[:itinerary]&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 10: Specify allowed itinerary params</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          </section>
+        </article>
+      </div>
+      <!-- #main -->
+    </div>
+    <!-- #main-container -->
+    <div class='footer-container'>
+      <footer class='wrapper'></footer>
+    </div>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script>
+      window.jQuery || document.write('<script src="/vendor/initializr/js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='/vendor/initializr/js/main.js'></script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src='//www.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>

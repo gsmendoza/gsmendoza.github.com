@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> ><! <![endif]-->
+<html class='no-js'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Geekcamp Baguio 2013 Ruby on Rails Workshop Guide</title>
+    <meta content='Geekcamp Baguio 2013 Ruby on Rails Workshop Guide' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/vendor/initializr/css/normalize.min.css' rel='stylesheet'>
+    <link href='/vendor/initializr/css/main.css' rel='stylesheet'>
+    <script src='/vendor/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'></script>
+    <link href='/stylesheets/guide.css' rel='stylesheet'>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class='header-container'>
+      <header class='wrapper clearfix'>
+        <h1 class='title'>
+          Geekcamp Baguio 2013 Ruby on Rails Workshop Guide
+        </h1>
+      </header>
+    </div>
+    <div class='main-container'>
+      <div class='main wrapper clearfix'>
+        <article>
+          <section>
+            <h1>Show Itinerary Page</h1>
+          </section>
+          <section>
+            <h2>Step 0: Have at least one itinerary</h2>
+            
+            <ul>
+            <li>Create another itinerary in rails console.</li>
+            <li>In the following slides, we assume that there&#39;s an itinerary with id 2.</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Goal</h2>
+            
+            <pre><code>browser &gt; http://localhost:3000/itineraries/2&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt; No route matches [GET] &quot;/itineraries/2&quot;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 1: Add the itineraries route</h2>
+            
+            <pre><code># config/routes&#x000A;TripsApp::Application.routes.draw do&#x000A;  resources :itineraries&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt; uninitialized constant ItinerariesController&#x000A;</code></pre>
+            <aside class='notes'>
+              <p>You can delete all the ruby comments.</p>
+            </aside>
+          </section>
+          <section>
+            <h2>Step 2: Add itineraries controller</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt;&#x000A;  Unknown action: The action &#39;show&#39; could not be found for ItinerariesController&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 3: Add show action to ItinerariesController</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def show&#x000A;  end&#x000A;end&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/show, application/show with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 4: Add itineraries/show template</h2>
+            
+            <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;%= debug Itinery.find(params[:id]) %&gt;&#x000A;</code></pre>
+            
+            <h3>Result</h3>
+            
+            <pre><code>browser =&gt;&#x000A;  --- !ruby/object:Itinerary&#x000A;  attributes:&#x000A;    id: 2&#x000A;    location: Baguio&#x000A;    travel_on: 2013-08-12&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 5: Prettify Show Itinerary page</h2>
+            
+            <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;% itinerary = Itinerary.find(params[:id]) %&gt;&#x000A;&#x000A;&lt;h1&gt;Itinerary &lt;%= itinerary.id %&gt;&lt;/h1&gt;&#x000A;&#x000A;&lt;ul&gt;&#x000A;  &lt;li&gt;Location: &lt;%= itinerary.location %&gt;&lt;/li&gt;&#x000A;  &lt;li&gt;Travel Date: &lt;%= itinerary.travel_on %&gt;&lt;/li&gt;&#x000A;&lt;/ul&gt;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 6.1: Clean up: do not interact with database directly in views</h2>
+            
+            <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;&#x000A;&lt;ul&gt;&#x000A;  &lt;li&gt;Location: &lt;%= @itinerary.location %&gt;&lt;/li&gt;&#x000A;  &lt;li&gt;Travel Date: &lt;%= @itinerary.travel_on %&gt;&lt;/li&gt;&#x000A;&lt;/ul&gt;&#x000A;</code></pre>
+            
+            <h2>Result</h2>
+            
+            <pre><code>browser =&gt;&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/show.html.erb&#x000A;  where line #1 raised:&#x000A;  undefined method `id&#39; for nil:NilClass&#x000A;  Line 1: &lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 6.2: Clean up: make controller set up @itinerary</h2>
+            
+            <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def show&#x000A;    @itinerary = Itinerary.find(params[:id])&#x000A;  end&#x000A;end&#x000A;</code></pre>
+          </section>
+          <section>
+            <h2>Step 7: Test another itinerary</h2>
+            
+            <ul>
+            <li>Create another itinerary in rails console.</li>
+            <li>View the itinerary from the website.</li>
+            </ul>
+          </section>
+        </article>
+      </div>
+      <!-- #main -->
+    </div>
+    <!-- #main-container -->
+    <div class='footer-container'>
+      <footer class='wrapper'></footer>
+    </div>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script>
+      window.jQuery || document.write('<script src="/vendor/initializr/js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='/vendor/initializr/js/main.js'></script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src='//www.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>

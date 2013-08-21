@@ -1,0 +1,31 @@
+.main article {
+  width: 100%;
+}
+.main h1 {
+  background-color: gray;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+}
+.main h2, .main h3 {
+  color: #f16529;
+}
+.main p code {
+  background-color: gray;
+  color: white;
+  padding: 0.12em 0.5em;
+}
+.main pre {
+  margin-left: 1em;
+}
+.main section.step, .main section.result {
+  border: thick solid gray;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+.main section.exercise {
+  margin-bottom: 2em;
+}
+.main section h1, .main section h2, .main section h3, .main section h4, .main section h5, .main section h6 {
+  margin-top: 0;
+}

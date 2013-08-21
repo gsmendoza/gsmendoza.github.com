@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> ><! <![endif]-->
+<html class='no-js'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Geekcamp Baguio 2013 Ruby on Rails Workshop Guide</title>
+    <meta content='Geekcamp Baguio 2013 Ruby on Rails Workshop Guide' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/vendor/initializr/css/normalize.min.css' rel='stylesheet'>
+    <link href='/vendor/initializr/css/main.css' rel='stylesheet'>
+    <script src='/vendor/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'></script>
+    <link href='/stylesheets/guide.css' rel='stylesheet'>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class='header-container'>
+      <header class='wrapper clearfix'>
+        <h1 class='title'>
+          Geekcamp Baguio 2013 Ruby on Rails Workshop Guide
+        </h1>
+      </header>
+    </div>
+    <div class='main-container'>
+      <div class='main wrapper clearfix'>
+        <article>
+          <h1>
+            Installing and Running Rails
+          </h1>
+          <section class='exercise step'>
+            <h2>Exercise 1: Installing and running a Rails app.</h2>
+            
+            <h4>Issue</h4>
+            
+            <pre><code>When I go to http://localhost:3000&#x000A;I should see my Rails website&#x000A;But instead my browser says it cannot display the webpage&#x000A;</code></pre>
+            
+            <h4>Cause</h4>
+            
+            <ul>
+            <li>Rails is not installed.</li>
+            <li>Rails is not running.</li>
+            </ul>
+            
+            <h4>Solution</h4>
+            
+            <p>For Windows, download Rails installer (Ruby 1.9) from
+            <a href="http://railsinstaller.org">http://railsinstaller.org</a> and install.
+            You will be asked to enter your name and email.</p>
+            
+            <p>Once installed, open Windows Powershell and run</p>
+            
+            <pre><code>rails new trips-app&#x000A;cd trips-app&#x000A;rails server&#x000A;</code></pre>
+            
+            <h4>Result</h4>
+            
+            <p>Congratulations! You should now see your Rails app at http://localhost:3000.</p>
+          </section>
+          <section class='exercise step'>
+            <h2>Exercise 2: Closing the Rails app</h2>
+            
+            <h4>Goal</h4>
+            
+            <pre><code>When I go to http://localhost:3000&#x000A;Then I should no longer see my Rails website running&#x000A;</code></pre>
+            
+            <h4>Solution</h4>
+            
+            <p>Press <code>Ctrl-C</code> then <code>Y</code> to terminate batch job.</p>
+            
+            <h4>Result</h4>
+            
+            <p>If you refresh the browser, http://localhost:3000 should now display
+            &quot;Internet Explorer cannot display the webpage&quot;</p>
+          </section>
+        </article>
+      </div>
+      <!-- #main -->
+    </div>
+    <!-- #main-container -->
+    <div class='footer-container'>
+      <footer class='wrapper'></footer>
+    </div>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script>
+      window.jQuery || document.write('<script src="/vendor/initializr/js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='/vendor/initializr/js/main.js'></script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src='//www.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
