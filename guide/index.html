@@ -32,604 +32,132 @@
         <article>
           <article>
             <h1>
+              Lesson 1:
               Installing and Running Rails
             </h1>
-            <section class='exercise step'>
+            <section class='exercise'>
               <h2>Exercise 1: Installing and running a Rails app.</h2>
-              
-              <h4>Issue</h4>
-              
-              <pre><code>When I go to http://localhost:3000&#x000A;I should see my Rails website&#x000A;But instead my browser says it cannot display the webpage&#x000A;</code></pre>
-              
-              <h4>Cause</h4>
-              
-              <ul>
-              <li>Rails is not installed.</li>
-              <li>Rails is not running.</li>
-              </ul>
-              
-              <h4>Solution</h4>
-              
-              <p>For Windows, download Rails installer (Ruby 1.9) from
-              <a href="http://railsinstaller.org">http://railsinstaller.org</a> and install.
-              You will be asked to enter your name and email.</p>
-              
-              <p>Once installed, open Windows Powershell and run</p>
-              
-              <pre><code>rails new trips-app&#x000A;cd trips-app&#x000A;rails server&#x000A;</code></pre>
-              
-              <h4>Result</h4>
-              
-              <p>Congratulations! You should now see your Rails app at http://localhost:3000.</p>
-            </section>
-            <section class='exercise step'>
-              <h2>Exercise 2: Closing the Rails app</h2>
-              
-              <h4>Goal</h4>
-              
-              <pre><code>When I go to http://localhost:3000&#x000A;Then I should no longer see my Rails website running&#x000A;</code></pre>
-              
-              <h4>Solution</h4>
-              
-              <p>Press <code>Ctrl-C</code> then <code>Y</code> to terminate batch job.</p>
-              
-              <h4>Result</h4>
-              
-              <p>If you refresh the browser, http://localhost:3000 should now display
-              &quot;Internet Explorer cannot display the webpage&quot;</p>
+              <pre class='goal'>Given Rails is installed&#x000A;And I have created a rails app&#x000A;When I run the rails app&#x000A;And I go to http://localhost:3000&#x000A;Then I should see my Rails website&#x000A;</pre>
+              <section class='step'>
+                <h3>Step 1: Given Rails is installed</h3>
+                
+                <p>For Windows, download Rails installer (Ruby 1.9) from
+                <a href="http://railsinstaller.org">http://railsinstaller.org</a> and install.
+                You will be asked to enter your name and email.</p>
+              </section>
+              <section class='step'>
+                <h3>Step 2: And I have created the app and am now running it</h3>
+                
+                <p>Open Windows Powershell and run</p>
+                
+                <pre><code>rails new trips-app&#x000A;cd trips-app&#x000A;rails server&#x000A;</code></pre>
+              </section>
+              <section class='step'>
+                <h3>Final Result</h3>
+                
+                <pre><code>Given Rails is installed&#x000A;And I have created a rails app&#x000A;When I run the rails app&#x000A;And I go to http://localhost:3000&#x000A;Then I should see my Rails website&#x000A;</code></pre>
+              </section>
+              <section class='exercise'>
+                <h2>Exercise 2: Closing the Rails app</h2>
+              </section>
+              <pre class='goal'>  Given my rails app is running&#x000A;  When I view the running app in the console&#x000A;  And I press `Ctrl-C` then `Y` to terminate batch job.&#x000A;  And I view http://localhost:3000&#x000A;  Then I should no longer see my Rails website running</pre>
             </section>
           </article>
           <article>
-            <section>
-              <h1>Database CRUD</h1>
-            </section>
-            <section>
+            <h1>
+              Lesson 2:
+              Database CRUD
+            </h1>
+            <section class='exercise'>
               <h2>Exercise 1: List itineraries</h2>
+              <pre class='goal'>Given I am in the rails console
+              When I enter Itinerary.all
+              Then I should see all the itineraries of the application</pre>
+              <section class='step'>
+                <h3>Step 0: Install and configure Geany</h3>
+                
+                <ul>
+                <li><p>Download from <a href="geany.org">geany.org</a> and install</p></li>
+                <li><p>Configure Geany:</p>
+                
+                <pre><code>Menu&#x000A;  Edit&#x000A;    Preferences&#x000A;      Editor&#x000A;        Indentation&#x000A;          Width: 2&#x000A;          Type: Spaces&#x000A;</code></pre></li>
+                </ul>
+              </section>
+              <section class='step'>
+                <h3>Issue 1: uninitialized constant Itinerary</h3>
+                
+                <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;  NameError: uninitialized constant Itinerary&#x000A;</code></pre>
+                
+                <h4>Solution</h4>
+                
+                <p>Create an Itinerary Class</p>
+                
+                <pre><code># app/models/itinerary.rb&#x000A;class Itinerary&#x000A;end&#x000A;</code></pre>
+              </section>
+              <section class='step'>
+                <h3>Issue 2: Itinerary.all is undefined</h3>
+                
+                <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;  NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
+                
+                <h4>Solution</h4>
+                
+                <p>Make Itinerary an ActiveRecord</p>
+                
+                <pre><code># app/models/itinerary.rb&#x000A;class Itinerary &lt; ActiveRecord::Base&#x000A;end&#x000A;</code></pre>
+              </section>
+              <section class='step'>
+                <h3>Issue 3: Itinerary.all is STILL undefined</h3>
+                
+                <pre><code>Given I am in the rails console&#x000A;And I have changed Itinerary to an ActiveRecord&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I STILL see the following error:&#x000A;  NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
+                
+                <h4>Solution</h4>
+                
+                <p>Reload the console. In the rails console, run</p>
+                
+                <pre><code>reload!&#x000A;</code></pre>
+              </section>
+              <section class='step'>
+                <h3>Issue 4: No such table for Itinerary</h3>
+                
+                <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;&#x000A;  [1m←[35mItinerary Load (0.0ms)←[0m  SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;  SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;  ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: itineraries:&#x000A;    SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;</code></pre>
+                
+                <h4>Solution</h4>
+                
+                <p>Create a database table itineraries.</p>
+                
+                <ol>
+                <li><p>In the Rails app directory, run</p>
+                
+                <pre><code>rails generate migration create_itineraries&#x000A;</code></pre></li>
+                <li><p>Edit the generated migration file</p>
+                
+                <pre><code># /db/migrations/2013_****_create_itineraries.rb&#x000A;class CreateItineraries &lt; ActiveRecord::Migration&#x000A;  def change&#x000A;    create_table :itineraries do |t|&#x000A;      t.string &quot;location&quot;&#x000A;      t.date &quot;travel_on&quot;&#x000A;    end&#x000A;  end&#x000A;end&#x000A;</code></pre></li>
+                <li><p>In the Rails app directory, run</p>
+                
+                <pre><code>rake db:migrate&#x000A;</code></pre></li>
+                </ol>
+              </section>
+              <section class='step'>
+                <h3>Final Result</h3>
+                
+                <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;And I should see that Itinerary doesn&#39;t have itineraries :)&#x000A;&#x000A;  Itinerary.all&#x000A;  =&gt; ←[1m←[36mItinerary Load (7.8ms)←[0m  ←[1mSELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;←[0m&#x000A;  =&gt; #&lt;ActiveRecord::Relation []&gt;&#x000A;</code></pre>
+              </section>
             </section>
-            <section>
-              <h2>Goal</h2>
-              
-              <pre><code>cmd &gt; rails console&#x000A;irb &gt; Itinerary.all&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>NameError: uninitialized constant Itinerary&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 0: Install and configure Geany</h2>
-              
-              <ul>
-              <li><p>Download from <a href="geany.org">geany.org</a> and install</p></li>
-              <li><p>Configure Geany:</p>
-              
-              <pre><code>Preferences&#x000A;  Editor&#x000A;    Indentation&#x000A;      Width: 2&#x000A;      Type: Spaces&#x000A;</code></pre></li>
-              </ul>
-            </section>
-            <section>
-              <h2>Step 1: Create Itinerary class</h2>
-              
-              <pre><code># app/models/itinerary.rb&#x000A;class Itinerary&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
-              
-              <ul>
-              <li>A class is a type of object.</li>
-              <li>Convention over configuration: case matters.</li>
-              </ul>
-            </section>
-            <section>
-              <h2>Step 2: Make Itinerary an ActiveRecord</h2>
-              
-              <pre><code>    # app/models/itinerary.rb&#x000A;    class Itinerary &lt; ActiveRecord::Base&#x000A;    end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
-              
-              <ul>
-              <li>ActiveRecord is a ruby gem (library) used to managing database records</li>
-              </ul>
-            </section>
-            <section>
-              <h2>Step 3: Reload the rails console</h2>
-              
-              <pre><code>irb &gt; reload!&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>Reloading...&#x000A;=&gt; true&#x000A;&#x000A;irb &gt; Itinerary.all&#x000A;[1m←[35mItinerary Load (0.0ms)←[0m  SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4. Create a database table itineraries.</h2>
-              
-              <pre><code>cmd &gt; rails generate migration create_itineraries&#x000A;&#x000A;# /db/migrations/2013_****_create_itineraries.rb&#x000A;class CreateItineraries &lt; ActiveRecord::Migration&#x000A;  def change&#x000A;    create_table :itineraries do |t|&#x000A;      t.string &quot;location&quot;&#x000A;      t.date &quot;travel_on&quot;&#x000A;    end&#x000A;  end&#x000A;end&#x000A;&#x000A;cmd &gt; rake db:migrate&#x000A;</code></pre>
-              
-              <ul>
-              <li>Migration is a transaction to update our database</li>
-              <li>Database is like an enhanced spreadsheet</li>
-              <li>Two kinds of rails commands: rails <command> and rake <command></li>
-              </ul>
-            </section>
-            <section>
-              <h2>Result</h2>
-              
-              <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; ←[1m←[36mItinerary Load (7.8ms)←[0m  ←[1mSELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;←[0m&#x000A;=&gt; #&lt;ActiveRecord::Relation []&gt;&#x000A;</code></pre>
-            </section>
-            <section>
+            <section class='exercise'>
               <h2>Exercise 2: Create an itinerary</h2>
-              
-              <pre><code>irb &gt; itinerary = Itinerary.new&#x000A;=&gt; #&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;&#x000A;&#x000A;irb &gt; itinerary.location = &#39;Baguio&#39;&#x000A;irb &gt; itinerary.travel_on = Date.new(2013, 12, 25)&#x000A;irb &gt; itinerary.save&#x000A;</code></pre>
-              
-              <ul>
-              <li>Variable assignment</li>
-              </ul>
+              <pre class='goal'>Given I am in the rails console&#x000A;When I initialize and save a new itinerary&#x000A;&#x000A;  itinerary = Itinerary.new&#x000A;  itinerary.location = 'Baguio'&#x000A;  itinerary.travel_on = Date.new(2013, 12, 25)&#x000A;  itinerary.save&#x000A;&#x000A;Then I should see that the new itinerary has been saved&#x000A;</pre>
             </section>
-            <section>
+            <section class='exercise'>
               <h2>Exercise 3: Find a specific itinerary</h2>
-              
-              <pre><code>irb &gt; Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;</code></pre>
+              <pre class='goal'>Given I am in the rails console&#x000A;When I enter&#x000A;&#x000A;  Itinerary.find(1)&#x000A;&#x000A;Then I should see something like&#x000A;&#x000A;  => #<Itinerary id: 1, location: "Baguio", travel_on: "2013-12-25">&#x000A;&#x000A;</pre>
             </section>
-            <section>
+            <section class='exercise'>
               <h2>Exercise 4: Edit an itinerary</h2>
-              
-              <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Baguio&quot;&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location = &#39;Manila&#39;&#x000A;irb &gt; itinerary.save&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Manila&quot;&#x000A;</code></pre>
+              <pre class='goal'>Given I am in the rails console&#x000A;When I change the location of the itinerary from Baguio to Manila&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;  itinerary.location = 'Manila'&#x000A;  itinerary.save&#x000A;&#x000A;And I reload the Itinerary&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;&#x000A;Then I should see that the location of the itinerary is Manila&#x000A;&#x000A;  itinerary.location&#x000A;  => "Manila"&#x000A;</pre>
             </section>
-            <section>
+            <section class='exercise'>
               <h2>Exercise 5: Delete an itinerary</h2>
-              
-              <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;&#x000A;irb &gt; itinerary.destroy&#x000A;&#x000A;irb &gt; Itinerary.find(1)&#x000A;=&gt; ActiveRecord::RecordNotFound: Couldn&#39;t find Itinerary with id=1&#x000A;</code></pre>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>Show Itinerary Page</h1>
-            </section>
-            <section>
-              <h2>Step 0: Have at least one itinerary</h2>
-              
-              <ul>
-              <li>Create another itinerary in rails console.</li>
-              <li>In the following slides, we assume that there&#39;s an itinerary with id 2.</li>
-              </ul>
-            </section>
-            <section>
-              <h2>Goal</h2>
-              
-              <pre><code>browser &gt; http://localhost:3000/itineraries/2&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt; No route matches [GET] &quot;/itineraries/2&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: Add the itineraries route</h2>
-              
-              <pre><code># config/routes&#x000A;TripsApp::Application.routes.draw do&#x000A;  resources :itineraries&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt; uninitialized constant ItinerariesController&#x000A;</code></pre>
-              <aside class='notes'>
-                <p>You can delete all the ruby comments.</p>
-              </aside>
-            </section>
-            <section>
-              <h2>Step 2: Add itineraries controller</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Unknown action: The action &#39;show&#39; could not be found for ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Add show action to ItinerariesController</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def show&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/show, application/show with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4: Add itineraries/show template</h2>
-              
-              <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;%= debug Itinery.find(params[:id]) %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  --- !ruby/object:Itinerary&#x000A;  attributes:&#x000A;    id: 2&#x000A;    location: Baguio&#x000A;    travel_on: 2013-08-12&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 5: Prettify Show Itinerary page</h2>
-              
-              <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;% itinerary = Itinerary.find(params[:id]) %&gt;&#x000A;&#x000A;&lt;h1&gt;Itinerary &lt;%= itinerary.id %&gt;&lt;/h1&gt;&#x000A;&#x000A;&lt;ul&gt;&#x000A;  &lt;li&gt;Location: &lt;%= itinerary.location %&gt;&lt;/li&gt;&#x000A;  &lt;li&gt;Travel Date: &lt;%= itinerary.travel_on %&gt;&lt;/li&gt;&#x000A;&lt;/ul&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 6.1: Clean up: do not interact with database directly in views</h2>
-              
-              <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;&#x000A;&lt;ul&gt;&#x000A;  &lt;li&gt;Location: &lt;%= @itinerary.location %&gt;&lt;/li&gt;&#x000A;  &lt;li&gt;Travel Date: &lt;%= @itinerary.travel_on %&gt;&lt;/li&gt;&#x000A;&lt;/ul&gt;&#x000A;</code></pre>
-              
-              <h2>Result</h2>
-              
-              <pre><code>browser =&gt;&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/show.html.erb&#x000A;  where line #1 raised:&#x000A;  undefined method `id&#39; for nil:NilClass&#x000A;  Line 1: &lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 6.2: Clean up: make controller set up @itinerary</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def show&#x000A;    @itinerary = Itinerary.find(params[:id])&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 7: Test another itinerary</h2>
-              
-              <ul>
-              <li>Create another itinerary in rails console.</li>
-              <li>View the itinerary from the website.</li>
-              </ul>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>List Itineraries Page</h1>
-            </section>
-            <section>
-              <h2>Step 0: Have at least one itinerary</h2>
-              
-              <ul>
-              <li>Create several itineraries in rails console.</li>
-              </ul>
-            </section>
-            <section>
-              <h2>Goal</h2>
-              
-              <pre><code>browser &gt; http://localhost:3000/itineraries&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Unknown action&#x000A;  The action &#39;index&#39; could not be found for ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: Add index action to ItinerariesController</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def index&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/index, application/index with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Add itineraries/index template</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;%= debug Itinerary.all %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  ---&#x000A;  - !ruby/object:Itinerary&#x000A;    attributes:&#x000A;      id: 1&#x000A;      location: Baguio&#x000A;      travel_on: 2013-08-12&#x000A;  - !ruby/object:Itinerary&#x000A;    attributes:&#x000A;      id: 2&#x000A;      location: Manila&#x000A;      travel_on: 2013-08-13&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Prettify List Itineraries page</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;% itineraries = Itinerary.all %&gt;&#x000A;&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4.1: Clean up: do not interact with database directly in views</h2>
-              <div class='smaller'>
-                <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
-              </div>
-              <h2>Result</h2>
-              
-              <pre><code>browser =&gt;&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/index.html.erb&#x000A;    where line #8 raised:&#x000A;  undefined method `each&#39; for nil:NilClass&#x000A;  Line 8: &lt;% @itineraries.each do |itinerary| %&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4.2: Clean up: itineries/index to set up @itineraries</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def index&#x000A;    @itineraries = Itinerary.all&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 5: Link itineraries to their Show pages</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;h1&gt;Itineraries&lt;/h1&gt;&#x000A;&#x000A;&lt;table&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;th&gt;Location&lt;/th&gt;&#x000A;    &lt;th&gt;Travel Date&lt;/th&gt;&#x000A;  &lt;/tr&gt;&#x000A;&lt;% @itineraries.each do |itinerary| %&gt;&#x000A;  &lt;tr&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.location %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= @itinerary.travel_on %&gt;&lt;/td&gt;&#x000A;    &lt;td&gt;&lt;%= link_to &#39;Show&#39;, action: &#39;show&#39;, id: itinerary.id %&gt;&lt;/td&gt;&#x000A;  &lt;tr&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/table&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 6: Link itinerary back to Itineraries Index page</h2>
-              
-              <pre><code># app/views/itineraries/show.html.erb&#x000A;&#x000A;&lt;p&gt;&lt;%= link_to &#39;Back&#39;, action: &#39;index&#39; %&gt;&lt;/p&gt;&#x000A;</code></pre>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>Create Itinerary Page</h1>
-            </section>
-            <section>
-              <h2>Exercise 1: Create an Itinerary</h2>
-              
-              <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: Create a link to create a new itinerary</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;p&gt;&#x000A;  &lt;%= link_to &#39;New&#39;, action: &#39;new&#39; %&gt;&#x000A;&lt;/p&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I go to the list of itineraries&#x000A;Then I should see a link to create a new itinerary&#x000A;When I click the link to create a new itinerary&#x000A;Then I should see a form for creating an itinerary&#x000A;But instead I see&#x000A;  Unknown action&#x000A;  The action &#39;new&#39; could not be found for ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Add new action to ItinerariesController</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def new&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/new, application/new with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Add itineraries/new template</h2>
-              
-              <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.new) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.date_select :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see&#x000A;  Unknown action: The action &#39;create&#39; could not be found for&#x000A;  ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4: Add Create action</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/create, application/create with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 5: Render the show page</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              <h2>Result</h2>
-              
-              <pre><code>browser =&gt;&#x000A;  NoMethodError in Itineraries#create&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/show.html.erb&#x000A;  where line #1 raised:&#x000A;  undefined method `id&#39; for nil:NilClass&#x000A;  Line 1: &lt;h1&gt;Itinerary &lt;%= @itinerary.id %&gt;&lt;/h1&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 6: Create an itinerary, save it, then show it</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              <h2>Result</h2>
-              
-              <pre><code>When I enter the itinerary in the form and submit it&#x000A;Then I should see the itinerary I created&#x000A;But instead I see an itinerary with blank location and travel date&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 7: Set the itinerary from the params</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    render :show&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 2: Fix bug: refreshing the itinerary page creates a new itinerary</h2>
-              
-              <pre><code>Given I have just created an itinerary&#x000A;And I am now viewing the created itinerary&#x000A;When I refresh the page&#x000A;Then I should see the same itinerary&#x000A;But instead a new itinerary is created!&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 8: Redirect instead of render</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.location = params[:itinerary][:location]&#x000A;    @itinerary.travel_on = params[:itinerary][:travel_on]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 3: Refactor params in create action</h2>
-            </section>
-            <section>
-              <h2>Step 9: Refactor params in create action</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary]&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>ActiveModel::ForbiddenAttributesError&#x000A;Extracted source (around line #15):&#x000A;Line 15: @itinerary.attributes = params[:itinerary]&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 10: Specify allowed itinerary params</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def create&#x000A;    @itinerary = Itinerary.new&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>Update Itinerary Page</h1>
-            </section>
-            <section>
-              <h2>Exercise 1: Edit an Itinerary</h2>
-              
-              <pre><code>Given I have an itinerary&#x000A;When I go to the list of itineraries&#x000A;Then I should see a link to edit the itinerary&#x000A;When I click the link to edit the itinerary&#x000A;Then I should see a form for editing the itinerary&#x000A;When I edit the itinerary in the form and submit it&#x000A;Then I should see that the itinerary has been updated&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: I should see a link to edit the itinerary</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;td&gt;&#x000A;  &lt;%= link_to &#39;Show&#39;, action: &#39;show&#39;, id: itinerary.id %&gt;&#x000A;  &lt;%= link_to &#39;Edit&#39;, action: &#39;edit&#39;, id: itinerary.id %&gt;&#x000A;&lt;/td&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I click the link to edit the itinerary&#x000A;Then I should see a form for editing the itinerary&#x000A;But instead I see&#x000A;  Unknown action&#x000A;  The action &#39;edit&#39; could not be found for ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Add edit action to ItinerariesController</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def edit&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/edit, application/edit with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Add itineraries/edit template</h2>
-              
-              <pre><code># app/views/itineraries/edit.html.erb&#x000A;&lt;h1&gt;Edit Itinerary&lt;/h1&gt;&#x000A;&lt;%= form_for(Itinerary.find(params[:id])) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.date_select :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I edit the itinerary in the form and submit it&#x000A;Then I should see that the itinerary has been updated&#x000A;But instead I see&#x000A;  Unknown action: The action &#39;update&#39; could not be found for&#x000A;  ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4: Add Update action</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def update&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/update, application/update with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 5: Update the itinerary, save it, then show it</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def update&#x000A;    @itinerary = Itinerary.find(params[:id])&#x000A;    @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;    @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 2: Refactor form</h2>
-            </section>
-            <section>
-              <h2>Step 1: Change Itinerary.find(params[:id]) to a @itinerary</h2>
-              
-              <pre><code># app/views/itineraries/edit.html.erb&#x000A;&lt;%= form_for(@itinerary) do |f| %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I click the link to edit the itinerary&#x000A;Then I should see a form for editing the itinerary&#x000A;But instead I see&#x000A;  Showing C:/Users/George Mendoza/trips-app/app/views/itineraries/edit.html.erb&#x000A;  where line #2 raised:&#x000A;  First argument in form cannot contain nil or be empty&#x000A;  Line 2: &lt;%= form_for(@itinerary) do |f| %&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Set @itinerary to Itinerary.find(params[:id])</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;def edit&#x000A;  @itinerary = Itinerary.find(params[:id])&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Move Itinerary.new to itineraries/new</h2>
-              
-              <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;%= form_for(@itinerary) do |f| %&gt;&#x000A;&#x000A;# app/controllers/itineraries_controller.rb&#x000A;def new&#x000A;  @itinerary = Itinerary.new&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4: Update edit page: replace form with partial</h2>
-              
-              <pre><code># app/views/itineraries/edit.html.erb&#x000A;&lt;h1&gt;Edit Itinerary&lt;/h1&gt;&#x000A;&lt;%= render &#39;form&#39; %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>  Missing partial itineraries/form, application/form with {&#x000A;    :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in:&#x000A;    &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;  Extracted source (around line #2):&#x000A;    &lt;%= render &#39;form&#39; %&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 5: Add form partial</h2>
-              
-              <pre><code># app/views/itineraries/_form.html.erb&#x000A;&lt;%= form_for(@itinerary) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :location %&gt;&#x000A;    &lt;%= f.text_field :location %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.label :travel_on %&gt;&#x000A;    &lt;%= f.date_select :travel_on %&gt;&#x000A;  &lt;/p&gt;&#x000A;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 6: Render form partial in New page</h2>
-              
-              <pre><code># app/views/itineraries/new.html.erb&#x000A;&lt;h1&gt;New Itinerary&lt;/h1&gt;&#x000A;&lt;%= render &#39;form&#39; %&gt;&#x000A;</code></pre>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>Delete Itinerary Page</h1>
-            </section>
-            <section>
-              <h2>Exercise 1: Delete an Itinerary</h2>
-              
-              <pre><code>When I view an itinerary&#x000A;Then I should see a button to delete the itinerary&#x000A;When I click the delete button&#x000A;Then I should see that the itinerary has been deleted&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: I should see a button to delete the itinerary</h2>
-              
-              <pre><code># app/views/itineraries/show.html.erb&#x000A;&lt;%= form_for(@itinerary, method: :delete) do |f| %&gt;&#x000A;  &lt;p&gt;&#x000A;    &lt;%= f.submit, value: &#39;Delete Itinerary&#39; %&gt;&#x000A;  &lt;/p&gt;&#x000A;&lt;% end %&gt;&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I click the delete button&#x000A;Then I should be informed that the itinerary has been deleted&#x000A;But instead I see&#x000A;  Unknown action&#x000A;  The action &#39;destroy&#39; could not be found for ItinerariesController&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Add destroy action to ItinerariesController</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def destroy&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>browser =&gt;&#x000A;  Template is missing: Missing template itineraries/destroy, application/destroy with&#x000A;  { :locale=&gt;[:en],&#x000A;    :formats=&gt;[:html],&#x000A;    :handlers=&gt;[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}.&#x000A;  Searched in: * &quot;C:/Users/George Mendoza/trips-app/app/views&quot;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: Destroy the itinerary, then show the list of itineraries</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;class ItinerariesController &lt; ApplicationController&#x000A;  def destroy&#x000A;    @itinerary = Itinerary.find(params[:id])&#x000A;    @itinerary.destroy&#x000A;    redirect_to action: &#39;index&#39;&#x000A;  end&#x000A;end&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 2: Notify me when the itinerary is deleted</h2>
-              
-              <pre><code>When I view an itinerary&#x000A;Then I should see a button to delete the itinerary&#x000A;When I click the delete button&#x000A;Then I should see that the itinerary has been deleted&#x000A;And I should be informed that it has been deleted&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: Try adding a notice to the index page</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;strong&gt;Notice: &lt;%= @notice %&gt;&lt;/strong&gt;&#x000A;&#x000A;# app/controllers/itineraries_controller.rb&#x000A;def destroy&#x000A;  @itinerary = Itinerary.find(params[:id])&#x000A;  @itinerary.destroy&#x000A;  @notice = &quot;You have successfully deleted a itinerary&quot;&#x000A;  redirect_to action: &#39;index&#39;&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>When I click the delete button&#x000A;And I should be informed that it has been deleted&#x000A;But instead I am not informed that it has been deleted&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: Change the notice to a flash message</h2>
-              
-              <pre><code># app/views/itineraries/index.html.erb&#x000A;&lt;strong&gt;Notice: &lt;%= flash[:notice] %&gt;&lt;/strong&gt;&#x000A;&#x000A;# app/controllers/itineraries_controller.rb&#x000A;def destroy&#x000A;  @itinerary = Itinerary.find(params[:id])&#x000A;  @itinerary.destroy&#x000A;  flash[:notice] = &quot;You have successfully deleted a itinerary&quot;&#x000A;  redirect_to action: &#39;index&#39;&#x000A;end&#x000A;</code></pre>
-            </section>
-          </article>
-          <article>
-            <section>
-              <h1>Validate Itinerary</h1>
-            </section>
-            <section>
-              <h2>Exercise 1: Validate an Itinerary</h2>
-              
-              <pre><code>Given I am creating an itinerary&#x000A;And the itinerary&#39;s location is blank&#x000A;When I try to save the itinerary&#x000A;Then I should see that the itinerary isn&#39;t saved&#x000A;And I should see an error saying the itinerary&#39;s location can&#39;t be blank&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>irb &gt; itinerary = Itinerary.new&#x000A;=&gt; =&gt; #&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;&#x000A;&#x000A;irb &gt; itinerary.save&#x000A;=&gt; true&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 1: Validate presence of location</h2>
-              
-              <pre><code># app/models/itinerary.rb&#x000A;class Itinerary &lt; ActiveRecord::Base&#x000A;  validates :location, presence: true&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>!!! Need to exit rails console to reload !!!&#x000A;&#x000A;irb &gt; itinerary = Itinerary.new&#x000A;=&gt; =&gt; #&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;&#x000A;&#x000A;irb &gt; itinerary.save&#x000A;=&gt; false&#x000A;&#x000A;irb &gt; itinerary.errors&#x000A;=&gt; #&lt;ActiveModel::Errors:0x41ba8c8&#x000A;  @base=#&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;,&#x000A;  @messages={:location=&gt;[&quot;can&#39;t be blank&quot;]}&gt;&#x000A;&#x000A;irb &gt; itinerary.location = &#39;Baguio&#39;&#x000A;irb &gt; itinerary.save&#x000A;=&gt; true&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 2: Validate new itineraries</h2>
-              
-              <pre><code>Given I am creating an itinerary&#x000A;When I try to save an invalid itinerary&#x000A;Then I should see an error saying the itinerary&#39;s location can&#39;t be blank&#x000A;But instead I see&#x000A;  ActionController::UrlGenerationError in ItinerariesController#create&#x000A;  No route matches {:action=&gt;&quot;show&quot;, :id=&gt;nil, :controller=&gt;&quot;itineraries&quot;}&#x000A;  Extracted source (around line #18):&#x000A;  redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 2: create action should render the new page if invalid</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;def create&#x000A;  @itinerary = Itinerary.new&#x000A;  @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;  if @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  else&#x000A;    render action: &#39;new&#39;&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>Given I am creating an itinerary&#x000A;When I try to save an invalid itinerary&#x000A;Then I should see an error saying the itinerary&#39;s location can&#39;t be blank&#x000A;But I don&#39;t see any error&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 3: add error messages to form</h2>
-              
-              <pre><code># app/views/itineraries/_form.html.erb&#x000A;&lt;ul&gt;&#x000A;&lt;% @itinerary.errors.full_messages.each do |full_message| %&gt;&#x000A;  &lt;li&gt;&lt;%= full_message %&gt;&lt;/li&gt;&#x000A;&lt;% end %&gt;&#x000A;&lt;/ul&gt;&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Exercise 3: Validate existing itineraries</h2>
-              
-              <pre><code>Given I am editing an itinerary&#x000A;When I try to save an invalid itinerary&#x000A;Then I should see an error saying the itinerary&#39;s location can&#39;t be blank&#x000A;But instead I see the Show Page of the itinerary&#x000A;</code></pre>
-            </section>
-            <section>
-              <h2>Step 4: update action should render the edit page if invalid</h2>
-              
-              <pre><code># app/controllers/itineraries_controller.rb&#x000A;def update&#x000A;  @itinerary = Itinerary.find(params[:id])&#x000A;  @itinerary.attributes = params[:itinerary].permit(:location, :travel_on)&#x000A;  if @itinerary.save&#x000A;    redirect_to action: &#39;show&#39;, id: @itinerary.id&#x000A;  else&#x000A;    render action: &#39;edit&#39;&#x000A;  end&#x000A;end&#x000A;</code></pre>
-              
-              <h3>Result</h3>
-              
-              <pre><code>Success!!!&#x000A;</code></pre>
+              <pre class='goal'>Given I am in the rails console&#x000A;When I destroy the itinerary&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;  itinerary.destroy&#x000A;&#x000A;And I reload the itinerary&#x000A;&#x000A;  Itinerary.find(1)&#x000A;&#x000A;Then I should see the following error:&#x000A;&#x000A;  => ActiveRecord::RecordNotFound: Couldn't find Itinerary with id=1</pre>
             </section>
           </article>
         </article>

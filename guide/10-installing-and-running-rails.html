@@ -31,51 +31,35 @@
       <div class='main wrapper clearfix'>
         <article>
           <h1>
+            Lesson 1:
             Installing and Running Rails
           </h1>
-          <section class='exercise step'>
+          <section class='exercise'>
             <h2>Exercise 1: Installing and running a Rails app.</h2>
-            
-            <h4>Issue</h4>
-            
-            <pre><code>When I go to http://localhost:3000&#x000A;I should see my Rails website&#x000A;But instead my browser says it cannot display the webpage&#x000A;</code></pre>
-            
-            <h4>Cause</h4>
-            
-            <ul>
-            <li>Rails is not installed.</li>
-            <li>Rails is not running.</li>
-            </ul>
-            
-            <h4>Solution</h4>
-            
-            <p>For Windows, download Rails installer (Ruby 1.9) from
-            <a href="http://railsinstaller.org">http://railsinstaller.org</a> and install.
-            You will be asked to enter your name and email.</p>
-            
-            <p>Once installed, open Windows Powershell and run</p>
-            
-            <pre><code>rails new trips-app&#x000A;cd trips-app&#x000A;rails server&#x000A;</code></pre>
-            
-            <h4>Result</h4>
-            
-            <p>Congratulations! You should now see your Rails app at http://localhost:3000.</p>
-          </section>
-          <section class='exercise step'>
-            <h2>Exercise 2: Closing the Rails app</h2>
-            
-            <h4>Goal</h4>
-            
-            <pre><code>When I go to http://localhost:3000&#x000A;Then I should no longer see my Rails website running&#x000A;</code></pre>
-            
-            <h4>Solution</h4>
-            
-            <p>Press <code>Ctrl-C</code> then <code>Y</code> to terminate batch job.</p>
-            
-            <h4>Result</h4>
-            
-            <p>If you refresh the browser, http://localhost:3000 should now display
-            &quot;Internet Explorer cannot display the webpage&quot;</p>
+            <pre class='goal'>Given Rails is installed&#x000A;And I have created a rails app&#x000A;When I run the rails app&#x000A;And I go to http://localhost:3000&#x000A;Then I should see my Rails website&#x000A;</pre>
+            <section class='step'>
+              <h3>Step 1: Given Rails is installed</h3>
+              
+              <p>For Windows, download Rails installer (Ruby 1.9) from
+              <a href="http://railsinstaller.org">http://railsinstaller.org</a> and install.
+              You will be asked to enter your name and email.</p>
+            </section>
+            <section class='step'>
+              <h3>Step 2: And I have created the app and am now running it</h3>
+              
+              <p>Open Windows Powershell and run</p>
+              
+              <pre><code>rails new trips-app&#x000A;cd trips-app&#x000A;rails server&#x000A;</code></pre>
+            </section>
+            <section class='step'>
+              <h3>Final Result</h3>
+              
+              <pre><code>Given Rails is installed&#x000A;And I have created a rails app&#x000A;When I run the rails app&#x000A;And I go to http://localhost:3000&#x000A;Then I should see my Rails website&#x000A;</code></pre>
+            </section>
+            <section class='exercise'>
+              <h2>Exercise 2: Closing the Rails app</h2>
+            </section>
+            <pre class='goal'>  Given my rails app is running&#x000A;  When I view the running app in the console&#x000A;  And I press `Ctrl-C` then `Y` to terminate batch job.&#x000A;  And I view http://localhost:3000&#x000A;  Then I should no longer see my Rails website running</pre>
           </section>
         </article>
       </div>

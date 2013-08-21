@@ -16,7 +16,11 @@
   padding: 0.12em 0.5em;
 }
 .main pre {
-  margin-left: 1em;
+  border: thin solid #f16529;
+  padding: 1em;
+}
+.main pre.goal {
+  border: thick solid #f16529;
 }
 .main section.step, .main section.result {
   border: thick solid gray;

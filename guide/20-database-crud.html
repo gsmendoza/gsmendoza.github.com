@@ -30,106 +30,100 @@
     <div class='main-container'>
       <div class='main wrapper clearfix'>
         <article>
-          <section>
-            <h1>Database CRUD</h1>
-          </section>
-          <section>
+          <h1>
+            Lesson 2:
+            Database CRUD
+          </h1>
+          <section class='exercise'>
             <h2>Exercise 1: List itineraries</h2>
+            <pre class='goal'>Given I am in the rails console
+            When I enter Itinerary.all
+            Then I should see all the itineraries of the application</pre>
+            <section class='step'>
+              <h3>Step 0: Install and configure Geany</h3>
+              
+              <ul>
+              <li><p>Download from <a href="geany.org">geany.org</a> and install</p></li>
+              <li><p>Configure Geany:</p>
+              
+              <pre><code>Menu&#x000A;  Edit&#x000A;    Preferences&#x000A;      Editor&#x000A;        Indentation&#x000A;          Width: 2&#x000A;          Type: Spaces&#x000A;</code></pre></li>
+              </ul>
+            </section>
+            <section class='step'>
+              <h3>Issue 1: uninitialized constant Itinerary</h3>
+              
+              <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;  NameError: uninitialized constant Itinerary&#x000A;</code></pre>
+              
+              <h4>Solution</h4>
+              
+              <p>Create an Itinerary Class</p>
+              
+              <pre><code># app/models/itinerary.rb&#x000A;class Itinerary&#x000A;end&#x000A;</code></pre>
+            </section>
+            <section class='step'>
+              <h3>Issue 2: Itinerary.all is undefined</h3>
+              
+              <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;  NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
+              
+              <h4>Solution</h4>
+              
+              <p>Make Itinerary an ActiveRecord</p>
+              
+              <pre><code># app/models/itinerary.rb&#x000A;class Itinerary &lt; ActiveRecord::Base&#x000A;end&#x000A;</code></pre>
+            </section>
+            <section class='step'>
+              <h3>Issue 3: Itinerary.all is STILL undefined</h3>
+              
+              <pre><code>Given I am in the rails console&#x000A;And I have changed Itinerary to an ActiveRecord&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I STILL see the following error:&#x000A;  NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
+              
+              <h4>Solution</h4>
+              
+              <p>Reload the console. In the rails console, run</p>
+              
+              <pre><code>reload!&#x000A;</code></pre>
+            </section>
+            <section class='step'>
+              <h3>Issue 4: No such table for Itinerary</h3>
+              
+              <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;But instead I see the following error:&#x000A;&#x000A;  [1m←[35mItinerary Load (0.0ms)←[0m  SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;  SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;  ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: itineraries:&#x000A;    SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;</code></pre>
+              
+              <h4>Solution</h4>
+              
+              <p>Create a database table itineraries.</p>
+              
+              <ol>
+              <li><p>In the Rails app directory, run</p>
+              
+              <pre><code>rails generate migration create_itineraries&#x000A;</code></pre></li>
+              <li><p>Edit the generated migration file</p>
+              
+              <pre><code># /db/migrations/2013_****_create_itineraries.rb&#x000A;class CreateItineraries &lt; ActiveRecord::Migration&#x000A;  def change&#x000A;    create_table :itineraries do |t|&#x000A;      t.string &quot;location&quot;&#x000A;      t.date &quot;travel_on&quot;&#x000A;    end&#x000A;  end&#x000A;end&#x000A;</code></pre></li>
+              <li><p>In the Rails app directory, run</p>
+              
+              <pre><code>rake db:migrate&#x000A;</code></pre></li>
+              </ol>
+            </section>
+            <section class='step'>
+              <h3>Final Result</h3>
+              
+              <pre><code>Given I am in the rails console&#x000A;When I enter Itinerary.all&#x000A;Then I should see all the itineraries of the application&#x000A;And I should see that Itinerary doesn&#39;t have itineraries :)&#x000A;&#x000A;  Itinerary.all&#x000A;  =&gt; ←[1m←[36mItinerary Load (7.8ms)←[0m  ←[1mSELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;←[0m&#x000A;  =&gt; #&lt;ActiveRecord::Relation []&gt;&#x000A;</code></pre>
+            </section>
           </section>
-          <section>
-            <h2>Goal</h2>
-            
-            <pre><code>cmd &gt; rails console&#x000A;irb &gt; Itinerary.all&#x000A;</code></pre>
-            
-            <h3>Result</h3>
-            
-            <pre><code>NameError: uninitialized constant Itinerary&#x000A;</code></pre>
-          </section>
-          <section>
-            <h2>Step 0: Install and configure Geany</h2>
-            
-            <ul>
-            <li><p>Download from <a href="geany.org">geany.org</a> and install</p></li>
-            <li><p>Configure Geany:</p>
-            
-            <pre><code>Preferences&#x000A;  Editor&#x000A;    Indentation&#x000A;      Width: 2&#x000A;      Type: Spaces&#x000A;</code></pre></li>
-            </ul>
-          </section>
-          <section>
-            <h2>Step 1: Create Itinerary class</h2>
-            
-            <pre><code># app/models/itinerary.rb&#x000A;class Itinerary&#x000A;end&#x000A;</code></pre>
-            
-            <h3>Result</h3>
-            
-            <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
-            
-            <ul>
-            <li>A class is a type of object.</li>
-            <li>Convention over configuration: case matters.</li>
-            </ul>
-          </section>
-          <section>
-            <h2>Step 2: Make Itinerary an ActiveRecord</h2>
-            
-            <pre><code>    # app/models/itinerary.rb&#x000A;    class Itinerary &lt; ActiveRecord::Base&#x000A;    end&#x000A;</code></pre>
-            
-            <h3>Result</h3>
-            
-            <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; NoMethodError: undefined method `all&#39; for Itinerary:Class&#x000A;</code></pre>
-            
-            <ul>
-            <li>ActiveRecord is a ruby gem (library) used to managing database records</li>
-            </ul>
-          </section>
-          <section>
-            <h2>Step 3: Reload the rails console</h2>
-            
-            <pre><code>irb &gt; reload!&#x000A;</code></pre>
-            
-            <h3>Result</h3>
-            
-            <pre><code>Reloading...&#x000A;=&gt; true&#x000A;&#x000A;irb &gt; Itinerary.all&#x000A;[1m←[35mItinerary Load (0.0ms)←[0m  SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: itineraries: SELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;&#x000A;</code></pre>
-          </section>
-          <section>
-            <h2>Step 4. Create a database table itineraries.</h2>
-            
-            <pre><code>cmd &gt; rails generate migration create_itineraries&#x000A;&#x000A;# /db/migrations/2013_****_create_itineraries.rb&#x000A;class CreateItineraries &lt; ActiveRecord::Migration&#x000A;  def change&#x000A;    create_table :itineraries do |t|&#x000A;      t.string &quot;location&quot;&#x000A;      t.date &quot;travel_on&quot;&#x000A;    end&#x000A;  end&#x000A;end&#x000A;&#x000A;cmd &gt; rake db:migrate&#x000A;</code></pre>
-            
-            <ul>
-            <li>Migration is a transaction to update our database</li>
-            <li>Database is like an enhanced spreadsheet</li>
-            <li>Two kinds of rails commands: rails <command> and rake <command></li>
-            </ul>
-          </section>
-          <section>
-            <h2>Result</h2>
-            
-            <pre><code>irb &gt; Itinerary.all&#x000A;=&gt; ←[1m←[36mItinerary Load (7.8ms)←[0m  ←[1mSELECT &quot;itineraries&quot;.* FROM &quot;itineraries&quot;←[0m&#x000A;=&gt; #&lt;ActiveRecord::Relation []&gt;&#x000A;</code></pre>
-          </section>
-          <section>
+          <section class='exercise'>
             <h2>Exercise 2: Create an itinerary</h2>
-            
-            <pre><code>irb &gt; itinerary = Itinerary.new&#x000A;=&gt; #&lt;Itinerary id: nil, location: nil, travel_on: nil&gt;&#x000A;&#x000A;irb &gt; itinerary.location = &#39;Baguio&#39;&#x000A;irb &gt; itinerary.travel_on = Date.new(2013, 12, 25)&#x000A;irb &gt; itinerary.save&#x000A;</code></pre>
-            
-            <ul>
-            <li>Variable assignment</li>
-            </ul>
+            <pre class='goal'>Given I am in the rails console&#x000A;When I initialize and save a new itinerary&#x000A;&#x000A;  itinerary = Itinerary.new&#x000A;  itinerary.location = 'Baguio'&#x000A;  itinerary.travel_on = Date.new(2013, 12, 25)&#x000A;  itinerary.save&#x000A;&#x000A;Then I should see that the new itinerary has been saved&#x000A;</pre>
           </section>
-          <section>
+          <section class='exercise'>
             <h2>Exercise 3: Find a specific itinerary</h2>
-            
-            <pre><code>irb &gt; Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;</code></pre>
+            <pre class='goal'>Given I am in the rails console&#x000A;When I enter&#x000A;&#x000A;  Itinerary.find(1)&#x000A;&#x000A;Then I should see something like&#x000A;&#x000A;  => #<Itinerary id: 1, location: "Baguio", travel_on: "2013-12-25">&#x000A;&#x000A;</pre>
           </section>
-          <section>
+          <section class='exercise'>
             <h2>Exercise 4: Edit an itinerary</h2>
-            
-            <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Baguio&quot;&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location = &#39;Manila&#39;&#x000A;irb &gt; itinerary.save&#x000A;&#x000A;irb &gt; itinerary = Itinerary.find(1)&#x000A;irb &gt; itinerary.location&#x000A;=&gt; &quot;Manila&quot;&#x000A;</code></pre>
+            <pre class='goal'>Given I am in the rails console&#x000A;When I change the location of the itinerary from Baguio to Manila&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;  itinerary.location = 'Manila'&#x000A;  itinerary.save&#x000A;&#x000A;And I reload the Itinerary&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;&#x000A;Then I should see that the location of the itinerary is Manila&#x000A;&#x000A;  itinerary.location&#x000A;  => "Manila"&#x000A;</pre>
           </section>
-          <section>
+          <section class='exercise'>
             <h2>Exercise 5: Delete an itinerary</h2>
-            
-            <pre><code>irb &gt; itinerary = Itinerary.find(1)&#x000A;=&gt; #&lt;Itinerary id: 1, location: &quot;Baguio&quot;, travel_on: &quot;2013-12-25&quot;&gt;&#x000A;&#x000A;irb &gt; itinerary.destroy&#x000A;&#x000A;irb &gt; Itinerary.find(1)&#x000A;=&gt; ActiveRecord::RecordNotFound: Couldn&#39;t find Itinerary with id=1&#x000A;</code></pre>
+            <pre class='goal'>Given I am in the rails console&#x000A;When I destroy the itinerary&#x000A;&#x000A;  itinerary = Itinerary.find(1)&#x000A;  itinerary.destroy&#x000A;&#x000A;And I reload the itinerary&#x000A;&#x000A;  Itinerary.find(1)&#x000A;&#x000A;Then I should see the following error:&#x000A;&#x000A;  => ActiveRecord::RecordNotFound: Couldn't find Itinerary with id=1</pre>
           </section>
         </article>
       </div>
