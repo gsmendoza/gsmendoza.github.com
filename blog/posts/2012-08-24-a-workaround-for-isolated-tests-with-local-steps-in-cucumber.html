@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> ><! <![endif]-->
+<html class='no-js'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>gsmendoza: a blog post a year!</title>
+    <meta content='gsmendoza: a blog post a year!' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/vendor/initializr/css/normalize.min.css' rel='stylesheet'>
+    <link href='/vendor/initializr/css/main.css' rel='stylesheet'>
+    <script src='/vendor/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'></script>
+    <link href='/stylesheets/blog.css' rel='stylesheet'>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class='header-container'>
+      <header class='wrapper clearfix'>
+        <h1 class='title'>
+          gsmendoza: a blog post a year!
+        </h1>
+      </header>
+    </div>
+    <div class='main-container'>
+      <div class='main wrapper clearfix'>
+        <article>
+          <h2>
+            <a href='/blog/posts/2012-08-24-a-workaround-for-isolated-tests-with-local-steps-in-cucumber'>
+              A workaround for isolated tests with local steps in Cucumber
+            </a>
+          </h2>
+          <hr>
+          
+          <p>I&#39;ve always wanted to write tests using <a href="https://github.com/codegram/spinach">Spinach</a>. Unlike Cucumber, steps in Spinach are local to the feature they are defined. Therefore, they do not conflict with step definitions in other features.</p>
+          
+          <p>However, we&#39;re using Cucumber in our project. The Cucumber way doesn&#39;t allow steps local to a scenario. In fact, it even considers it an <a href="https://github.com/cucumber/cucumber/wiki/Feature-Coupled-Steps-(Antipattern">anti-pattern</a>).</p>
+          
+          <p>Last week though, I had an idea: why not stamp each step with a scenario ID so that the step is local to the scenario? Using the spinach example, I ended with something like this:</p>
+          
+          <pre><code># features/1_greetings.feature&#x000A;&#x000A;Scenario: Formal greeting&#x000A;  Given I have an empty array [#1]&#x000A;  And I append my first name and my last name to it [#1]&#x000A;  When I pass it to my super-duper method [#1]&#x000A;  Then the output should contain a formal greeting [#1]&#x000A;</code></pre>
+          
+          <p>The #1 stamp id can be any value. However, I like to use ticket numbers for documentation.</p>
+          
+          <p>I then placed all the steps in one step definition file:</p>
+          
+          <pre><code># features/step_definitions/1_greetings.rb&#x000A;&#x000A;Given &#39;I have an empty array [#1]&#39; do&#x000A;  #...&#x000A;end&#x000A;&#x000A;And &#39;I append my first name and my last name to it [#1]&#39; do&#x000A;  #...&#x000A;end&#x000A;&#x000A;When &#39;I pass it to my super-duper method [#1]&#39; do&#x000A;  #...&#x000A;end&#x000A;&#x000A;Then &#39;the output should contain a formal greeting [#1]&#39; do&#x000A;  #...&#x000A;end&#x000A;</code></pre>
+          
+          <p>Benefits:</p>
+          
+          <ol>
+          <li>I can read the implementation of the scenario in one file. I can also write the step definitions from top to bottom, making them easier to read.</li>
+          <li>The descriptions of the step definitions are within the context of the scenario. This allows me to write step definitions that are more concise, since I can choose not to add details that are already implied elsewhere in the scenario. This makes the scenario more natural to read.</li>
+          <li>If I change a step definition, I don&#39;t have to worry about the change breaking other tests.</li>
+          </ol>
+          
+          <p>Of course, the step definitions are not reusable, but for me, that&#39;s a plus. The use of regular expressions as step definition arguments makes it difficult to find the implementation of a step. It&#39;s also not easy to remove or change a step definition since you can&#39;t immediately tell if the step is used in other features.</p>
+          
+          <p>I presented this approach to the Cucumber guy in the team. He&#39;s not too hot about it :) While he agrees that reusing steps creates more problems that it solves, he believes that if you can make a step explicit enough, it would prevent steps from colliding. Besides, he says that you <em>do</em> want explicit steps because they become your tools for communicating the language of the project&#39;s domain. In other words, a step should be a concrete atomic construct of the domain language.</p>
+          
+          <p>This notion of making steps atoms of the domain language is certainly possible (just look at the apps in RelishApps). However, I think this idea was also primarily made out of the desire to make the steps reusable. If you agree that reusable steps are more painful than beneficial, and that long, explicit step definition are unnatural to read, is there any other reason to make each step unique and explicit?</p>
+          
+          <p>With the ticket number approach above, I&#39;ve decided to express domain concepts one level higher: from the step to the scenario. Unlike the step, the scenario is sure to be isolated: it is a self contained story within the domain. The steps can now be local to the scenario: their implementation will just depend on the context of the scenario. The scenarios are now the tools for communicating the domain language, not the steps.</p>
+          
+          <p>Your thoughts?</p>
+        </article>
+      </div>
+      <!-- #main -->
+    </div>
+    <!-- #main-container -->
+    <div class='footer-container'>
+      <footer class='wrapper'>
+        <section class='about'>
+          <p>
+            gsmendoza is George Mendoza, a software developer based in Baguio City,
+            Philippines. You can find him at
+          </p>
+          <ul>
+            <li><a href="http://facebook.com/gsmendoza">http://facebook.com/gsmendoza</a></li>
+            <li><a href="http://github.com/gsmendoza">http://github.com/gsmendoza</a></li>
+            <li><a href="http://www.youtube.com/user/gsmendozaplusplus">http://www.youtube.com/user/gsmendozaplusplus</a></li>
+          </ul>
+        </section>
+      </footer>
+    </div>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script>
+      window.jQuery || document.write('<script src="/vendor/initializr/js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='/vendor/initializr/js/main.js'></script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src='//www.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
