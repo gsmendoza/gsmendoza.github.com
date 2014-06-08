@@ -13,13 +13,19 @@
   text-align: center;
 }
 .main h2 {
-  margin-top: 2em;
+  font-size: 3em;
+  line-height: 1.1em;
+  margin-top: 1.5em;
+  text-align: center;
 }
 .main h2 a {
   color: inherit;
   text-decoration: none;
 }
-.main h2, .main h3 {
+.main h2 {
+  color: #f16529;
+}
+.main h3 {
   color: #f16529;
 }
 .main p code {

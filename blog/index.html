@@ -31,6 +31,42 @@
       <div class='main wrapper clearfix'>
         <article>
           <h2>
+            <a href='/blog/posts/2014-06-08-how-i-write-acceptance-tests'>
+              How I write acceptance tests
+            </a>
+          </h2>
+          <p><em>This article is a work in progress. However, I&#39;m putting it out to the public as motivation for myself to complete it :)</em></p>
+          
+          <p><a href="https://github.com/gsmendoza/napybara">https://github.com/gsmendoza/napybara</a> is a ruby gem I wrote for building Capybara helpers.</p>
+          
+          <h3>Use rspec-example_steps to describe the test from the user&#39;s perspective</h3>
+          
+          <ul>
+          <li><p><a href="https://github.com/railsware/rspec-example_steps">https://github.com/railsware/rspec-example_steps</a> is a gem for writing Given When Then tests. It&#39;s an underrated alternative to Cucumber.</p></li>
+          <li><p>Make each step pending.</p></li>
+          <li><p>Don&#39;t worry about reusing steps. Reuse Napybara pages instead!</p></li>
+          </ul>
+          
+          <h3>Describe each step</h3>
+          
+          <ul>
+          <li>Describe how to interact with the page and its elements in an objecti-oriented, not procedural-oriented, fashion.</li>
+          </ul>
+          
+          <h3>Pattern: Napybara elements with values</h3>
+          
+          <ul>
+          <li>If a Napybara element represents some object in the domain, add a <code>value</code> method to it. Let the method return the value represented by the element.</li>
+          </ul>
+          
+          <h3>Implement the feature step by step</h3>
+          
+          <ul>
+          <li>Build the Napybara page along with the actual UI.</li>
+          </ul>
+          
+          <h3>Move Napybara page to its own module for reuse in other tests</h3>
+          <h2>
             <a href='/blog/posts/2013-07-22-pageobject-simpledelegator-awesome-capybara-helpers'>
               PageObject + SimpleDelegator = Awesome Capybara Helpers
             </a>

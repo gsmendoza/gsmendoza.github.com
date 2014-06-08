@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> ><! <![endif]-->
+<html class='no-js'>
+  <!-- <![endif] -->
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>gsmendoza: a blog post a year!</title>
+    <meta content='gsmendoza: a blog post a year!' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/vendor/initializr/css/normalize.min.css' rel='stylesheet'>
+    <link href='/vendor/initializr/css/main.css' rel='stylesheet'>
+    <script src='/vendor/initializr/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'></script>
+    <link href='/stylesheets/blog.css' rel='stylesheet'>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class='header-container'>
+      <header class='wrapper clearfix'>
+        <h1 class='title'>
+          gsmendoza: a blog post a year!
+        </h1>
+      </header>
+    </div>
+    <div class='main-container'>
+      <div class='main wrapper clearfix'>
+        <article>
+          <h2>
+            <a href='/blog/posts/2014-06-08-how-i-write-acceptance-tests'>
+              How I write acceptance tests
+            </a>
+          </h2>
+          <p><em>This article is a work in progress. However, I&#39;m putting it out to the public as motivation for myself to complete it :)</em></p>
+          
+          <p><a href="https://github.com/gsmendoza/napybara">https://github.com/gsmendoza/napybara</a> is a ruby gem I wrote for building Capybara helpers.</p>
+          
+          <h3>Use rspec-example_steps to describe the test from the user&#39;s perspective</h3>
+          
+          <ul>
+          <li><p><a href="https://github.com/railsware/rspec-example_steps">https://github.com/railsware/rspec-example_steps</a> is a gem for writing Given When Then tests. It&#39;s an underrated alternative to Cucumber.</p></li>
+          <li><p>Make each step pending.</p></li>
+          <li><p>Don&#39;t worry about reusing steps. Reuse Napybara pages instead!</p></li>
+          </ul>
+          
+          <h3>Describe each step</h3>
+          
+          <ul>
+          <li>Describe how to interact with the page and its elements in an objecti-oriented, not procedural-oriented, fashion.</li>
+          </ul>
+          
+          <h3>Pattern: Napybara elements with values</h3>
+          
+          <ul>
+          <li>If a Napybara element represents some object in the domain, add a <code>value</code> method to it. Let the method return the value represented by the element.</li>
+          </ul>
+          
+          <h3>Implement the feature step by step</h3>
+          
+          <ul>
+          <li>Build the Napybara page along with the actual UI.</li>
+          </ul>
+          
+          <h3>Move Napybara page to its own module for reuse in other tests</h3>
+        </article>
+      </div>
+      <!-- #main -->
+    </div>
+    <!-- #main-container -->
+    <div class='footer-container'>
+      <footer class='wrapper'>
+        <section class='about'>
+          <p>
+            gsmendoza is George Mendoza, a software developer based in Baguio City,
+            Philippines. You can find him at
+          </p>
+          <ul>
+            <li><a href="http://facebook.com/gsmendoza">http://facebook.com/gsmendoza</a></li>
+            <li><a href="http://github.com/gsmendoza">http://github.com/gsmendoza</a></li>
+            <li><a href="http://www.youtube.com/user/gsmendozaplusplus">http://www.youtube.com/user/gsmendozaplusplus</a></li>
+          </ul>
+        </section>
+      </footer>
+    </div>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>
+    <script>
+      window.jQuery || document.write('<script src="/vendor/initializr/js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='/vendor/initializr/js/main.js'></script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src='//www.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
