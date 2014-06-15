@@ -31,21 +31,37 @@
       <div class='main wrapper clearfix'>
         <article>
           <h2>
-            <a href='/blog/posts/2014-06-08-how-i-write-acceptance-tests'>
-              How I write acceptance tests
+            <a href='/blog/posts/2014-06-08-how-i-write-acceptance-specs'>
+              How I write acceptance specs
             </a>
           </h2>
-          <p><em>This article is a work in progress. However, I&#39;m putting it out to the public as motivation for myself to complete it :)</em></p>
+          <p><em>This article is a work in progress. I&#39;m putting it out in public to motivate myself to complete it :)</em></p>
           
-          <p><a href="https://github.com/gsmendoza/napybara">https://github.com/gsmendoza/napybara</a> is a ruby gem I wrote for building Capybara helpers.</p>
+          <p><a href="https://github.com/gsmendoza/napybara">Napybara</a> is a ruby gem I wrote for building Capybara helpers. In this article, I&#39;ll describe how I use it and <a href="https://github.com/railsware/rspec-example_steps">rspec-example_steps</a> to write acceptance tests for Rails apps.</p>
           
-          <h3>Use rspec-example_steps to describe the test from the user&#39;s perspective</h3>
+          <h3>Use rspec-example_steps to describe the spec from the user&#39;s perspective</h3>
           
-          <ul>
-          <li><p><a href="https://github.com/railsware/rspec-example_steps">https://github.com/railsware/rspec-example_steps</a> is a gem for writing Given When Then tests. It&#39;s an underrated alternative to Cucumber.</p></li>
-          <li><p>Make each step pending.</p></li>
-          <li><p>Don&#39;t worry about reusing steps. Reuse Napybara pages instead!</p></li>
-          </ul>
+          <p><a href="https://github.com/railsware/rspec-example_steps">rspec-example_steps</a> is a gem for writing specs in Gherkin (aka Given-When-Then) format. It&#39;s an underrated alternative to Cucumber.</p>
+          
+          <p>Let&#39;s say we&#39;re building a to-do app. Our first feature is &quot;Users should be able to add a new to-do item.&quot; With rspec-example_steps and <a href="https://github.com/cavalle/steak">steak</a>, I can write that spec as</p>
+          
+          <p><code>ruby&#x000A;feature &quot;To-do: &quot; do&#x000A;  Steps &quot;Users should be able to add a new to-do item.&quot; do&#x000A;    Given &quot;I am in the home page&quot;&#x000A;    When &quot;I click the New To-Do link&quot;&#x000A;    Then &quot;I should see the New To-Do page&quot;&#x000A;    And &quot;I should see a form for adding a new to-do item&quot;&#x000A;    When &quot;I enter my to-do in the form&quot;&#x000A;    And &quot;I submit the form&quot;&#x000A;    Then &quot;I should see the To-Do List page&quot;&#x000A;    And &quot;I should see the to-do item that I entered there&quot;&#x000A;  end&#x000A;end</code></p>
+          
+          <p><code>Steps</code> is basically a synonym of RSpec&#39;s <code>it</code>. Thus the whole &quot;Users should be able to add a new to-do item.&quot; block is basically an <code>it</code> block.</p>
+          
+          <p>If you&#39;re a Cucumber user, you&#39;ll notice that I&#39;m not worrying too much about the specificity and reusability of the steps. Cucumber users tend to debate a lot about how specific steps should be. In my opinion, steps are not the best place for building acceptance spec helpers. This is because steps are too coupled to their own descriptions. Natural-reading step descriptions rely heavily on the context of the spec they are used in, making them difficult to make context-insensitive. For example, in the &quot;I should see the to-do item that I entered there&quot; line, &quot;to-do item&quot; refers to some to-do item I entered in a previous step, and &quot;there&quot; refers to the To-Do List page. Had I chose to make the step context-insensitive, I could have written the last two lines this way:</p>
+          
+          <p><code>ruby&#x000A;      Then &quot;I should see the To-Do List page&quot;&#x000A;      And &quot;I should see the to-do item that I entered in the To-Do List page&quot;</code></p>
+          
+          <p>Context-insensitive steps become redundant quickly. If your goal for writing specs in Gherkin is to communicate specs with non-technical people, presenting specs full of redundant step descriptions defeats that goal.</p>
+          
+          <p>What about the specificity of the steps? Shouldn&#39;t the steps be as general as possible, avoiding mentions to UI details like links and forms? My take here is that it&#39;s difficult for a single developer much less a team of developers to determine the single, right layer for describing domain concepts. Rather than taking that path, I recommend making steps as fine as possible, depending on how complex the feature is. Complex features require fine and numerous steps, while simple features can utilize more general ones. With finer steps, you can implement complex features easier, since you have less to do to implement each step.</p>
+          
+          <p>The specificity of steps also depend on how integral the steps are to the spec you&#39;re implementing. If you&#39;re implementing a spec for editing an existing to-do item, you don&#39;t have to make the steps for creating that existing to-do item to be as fine as the steps for the &quot;Users should be able to add a new to-do item.&quot; Since the existence of the to-do item is just an assumption in the spec, you can simply summarize that assumption in one step:</p>
+          
+          <p><code>&#x000A;Given &quot;I have an existing to-do item&quot;</code></p>
+          
+          <p>So to recap, our goal with each spec is to make the steps as natural-sounding as possible. We&#39;re not concerning ourselves with figuring out a &quot;right&quot; level of specificity for the steps in order to make them reusable. How then do we make reusable helpers for our acceptance tests?. This is where Napybara comes in.</p>
           
           <h3>Describe each step</h3>
           
@@ -65,7 +81,7 @@
           <li>Build the Napybara page along with the actual UI.</li>
           </ul>
           
-          <h3>Move Napybara page to its own module for reuse in other tests</h3>
+          <h3>Move Napybara page to its own module for reuse in other specs</h3>
         </article>
       </div>
       <!-- #main -->
