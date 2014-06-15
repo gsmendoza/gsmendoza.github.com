@@ -45,13 +45,13 @@
           
           <p>Let&#39;s say we&#39;re building a to-do app. Our first feature is &quot;Users should be able to add a new to-do item.&quot; With rspec-example_steps and <a href="https://github.com/cavalle/steak">steak</a>, I can write that spec as</p>
           
-          <p><code>ruby&#x000A;feature &quot;To-do: &quot; do&#x000A;  Steps &quot;Users should be able to add a new to-do item.&quot; do&#x000A;    Given &quot;I am in the home page&quot;&#x000A;    When &quot;I click the New To-Do link&quot;&#x000A;    Then &quot;I should see the New To-Do page&quot;&#x000A;    And &quot;I should see a form for adding a new to-do item&quot;&#x000A;    When &quot;I enter my to-do in the form&quot;&#x000A;    And &quot;I submit the form&quot;&#x000A;    Then &quot;I should see the To-Do List page&quot;&#x000A;    And &quot;I should see the to-do item that I entered there&quot;&#x000A;  end&#x000A;end</code></p>
+          <pre><code>feature &quot;To-do: &quot; do&#x000A;  Steps &quot;Users should be able to add a new to-do item.&quot; do&#x000A;    Given &quot;I am in the home page&quot;&#x000A;    When &quot;I click the New To-Do link&quot;&#x000A;    Then &quot;I should see the New To-Do page&quot;&#x000A;    And &quot;I should see a form for adding a new to-do item&quot;&#x000A;    When &quot;I enter my to-do in the form&quot;&#x000A;    And &quot;I submit the form&quot;&#x000A;    Then &quot;I should see the To-Do List page&quot;&#x000A;    And &quot;I should see the to-do item that I entered there&quot;&#x000A;  end&#x000A;end&#x000A;</code></pre>
           
           <p><code>Steps</code> is basically a synonym of RSpec&#39;s <code>it</code>. Thus the whole &quot;Users should be able to add a new to-do item.&quot; block is basically an <code>it</code> block.</p>
           
           <p>If you&#39;re a Cucumber user, you&#39;ll notice that I&#39;m not worrying too much about the specificity and reusability of the steps. Cucumber users tend to debate a lot about how specific steps should be. In my opinion, steps are not the best place for building acceptance spec helpers. This is because steps are too coupled to their own descriptions. Natural-reading step descriptions rely heavily on the context of the spec they are used in, making them difficult to make context-insensitive. For example, in the &quot;I should see the to-do item that I entered there&quot; line, &quot;to-do item&quot; refers to some to-do item I entered in a previous step, and &quot;there&quot; refers to the To-Do List page. Had I chose to make the step context-insensitive, I could have written the last two lines this way:</p>
           
-          <p><code>ruby&#x000A;      Then &quot;I should see the To-Do List page&quot;&#x000A;      And &quot;I should see the to-do item that I entered in the To-Do List page&quot;</code></p>
+          <pre><code>Then &quot;I should see the To-Do List page&quot;&#x000A;And &quot;I should see the to-do item that I entered in the To-Do List page&quot;&#x000A;</code></pre>
           
           <p>Context-insensitive steps become redundant quickly. If your goal for writing specs in Gherkin is to communicate specs with non-technical people, presenting specs full of redundant step descriptions defeats that goal.</p>
           
@@ -59,7 +59,7 @@
           
           <p>The specificity of steps also depend on how integral the steps are to the spec you&#39;re implementing. If you&#39;re implementing a spec for editing an existing to-do item, you don&#39;t have to make the steps for creating that existing to-do item to be as fine as the steps for the &quot;Users should be able to add a new to-do item.&quot; Since the existence of the to-do item is just an assumption in the spec, you can simply summarize that assumption in one step:</p>
           
-          <p><code>&#x000A;Given &quot;I have an existing to-do item&quot;</code></p>
+          <pre><code>Given &quot;I have an existing to-do item&quot;&#x000A;</code></pre>
           
           <p>So to recap, our goal with each spec is to make the steps as natural-sounding as possible. We&#39;re not concerning ourselves with figuring out a &quot;right&quot; level of specificity for the steps in order to make them reusable. How then do we make reusable helpers for our acceptance tests?. This is where Napybara comes in.</p>
           
