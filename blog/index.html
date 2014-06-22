@@ -65,9 +65,26 @@
           
           <h3>Describe each step</h3>
           
-          <ul>
-          <li>Describe how to interact with the page and its elements in an objecti-oriented, not procedural-oriented, fashion.</li>
-          </ul>
+          <p>I use Napybara to describe each step in an object-oriented manner. For example, let&#39;s take the second step:</p>
+          
+          <pre><code>When &quot;I click the New To-Do link&quot;&#x000A;</code></pre>
+          
+          <p>This is how I can describe this step with Napybara:</p>
+          
+          <pre><code>When &quot;I click the New To-Do link&quot; do&#x000A;  home_page.new_todo_link.node.click&#x000A;end&#x000A;</code></pre>
+          
+          <p>Compare with describing the steps using Capybara&#39;s API:</p>
+          
+          <pre><code>When &quot;I click the New To-Do link&quot; do&#x000A;  click_link &#39;New To-do&#39;&#x000A;end&#x000A;</code></pre>
+          
+          <p>The Capybara approach describes the step in terms of procedures while the Napybara approach describes the steps in terms of pages and elements. The Capybara approach also uses a single call to find the element and interact with it, while the Napybara approach breaks these two actions into separate calls. In my opinion, these differences make working with acceptance tests easier with Napybara:</p>
+          
+          <ol>
+          <li><p>Debugging. When an acceptance test fails, we usually want to know 1) if the element we&#39;re interacting with in the page is still there, and 2) if we&#39;re interacting with it correctly. Since Napybara allows us to make separate calls for these two actions, it&#39;s easier for us to isolate them during troubleshooting.</p></li>
+          <li><p>Organizing and discovering helpers. Todo.</p></li>
+          </ol>
+          
+          <p>Some argue that writing the steps in terms of procedures is more high-level and is thus closer to the user&#39;s way of thinking. This might be true, but we can already accomplish this advantage by writing the steps in Gherkin.</p>
           
           <h3>Pattern: Napybara elements with values</h3>
           
